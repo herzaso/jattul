@@ -17,7 +17,7 @@ fields = {
 class RoleListAPI(Resource):
     decorators = [auth.login_required]
 
-    d, absolute=Trueef __init__(self):
+    def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('name', type=str, required=True,
                                    help='No {} name provided'.format(key),
