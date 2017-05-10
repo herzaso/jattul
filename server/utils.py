@@ -1,19 +1,7 @@
-from flask import make_response, jsonify, abort, g
+from flask import abort
 from flask_httpauth import HTTPBasicAuth
 
 auth = HTTPBasicAuth()
-
-@auth.get_password
-def get_password(username):
-    if username == 'miguel':
-        return 'python'
-    return None
-
-@auth.verify_password
-def verify_password(username, password):
-    if username == 'admin' and password == 'admin':
-        return True
-    return False
 
 # @auth.error_handler
 # def unauthorized():

@@ -1,8 +1,9 @@
 from flask import Flask, make_response, jsonify
 from flask_restful import Api
+from api.login import login
 from api.roles import RoleAPI, RoleListAPI
 from api.projects import ProjectAPI, ProjectListAPI
-from api.users import UserAPI, UserListAPI
+from api.users import UserAPI, UserListAPI, data as users
 from api.tasks import TaskAPI, TaskListAPI
 from api.trackings import TrackingAPI, TrackingListAPI
 
@@ -14,6 +15,7 @@ app.config.update(
     SECRET_KEY = 'T!kAl rulzz'
 )
 
+app.register_blueprint(login)
 api.add_resource(RoleListAPI, '/jattul/api/v1.0/roles', endpoint='roles')
 api.add_resource(RoleAPI, '/jattul/api/v1.0/roles/<int:id>', endpoint='role')
 api.add_resource(UserListAPI, '/jattul/api/v1.0/users', endpoint='users')

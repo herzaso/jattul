@@ -4,13 +4,13 @@ from utils import auth, get_resource
 key = 'user'
 
 data = [
-    {'id':1, 'first_name':'Ofir', 'last_name':'Herzas', 'email':'ofirh@tikalk.com', 'password':'1234', 'role_id':0, 'projects':[1]}
+    {'id':1, 'first_name':'Ofir', 'last_name':'Herzas', 'username':'ofirh@tikalk.com', 'password':'1234', 'role_id':0, 'projects':[1]}
 ]
 
 fields = {
     'first_name': fields.String,
     'last_name': fields.String,
-    'email': fields.String,
+    'username': fields.String,
     'password': fields.String,
     'role_id': fields.Integer,
     'projects': fields.List(fields.Integer),
@@ -50,7 +50,7 @@ class UserAPI(Resource):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('first_name', type=str, location='json')
         self.reqparse.add_argument('last_name', type=str, location='json')
-        self.reqparse.add_argument('email', type=str, location='json')
+        self.reqparse.add_argument('username', type=str, location='json')
         self.reqparse.add_argument('password', type=str, location='json')
         self.reqparse.add_argument('role_id', type=int, location='json')
         self.reqparse.add_argument('projects', type=list, location='json')
@@ -72,3 +72,11 @@ class UserAPI(Resource):
         r = get_resource(data, id)
         data.remove(r)
         return {'result': True}
+
+
+@auth.verify_password
+def verify_password(username, password):
+    try:
+        user = [x for x in data if x['username'] == username and x['password'] == password][0]
+        return True
+    except: return False
