@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse, fields, marshal
-from utils import auth, get_resource
+from utils import login_required, get_resource
 
 key = 'tracking'
 
@@ -19,7 +19,7 @@ fields = {
 
 
 class TrackingListAPI(Resource):
-    decorators = [auth.login_required]
+    decorators = [login_required]
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -48,13 +48,13 @@ class TrackingListAPI(Resource):
 
 
 class TrackingAPI(Resource):
-    decorators = [auth.login_required]
+    decorators = [login_required]
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('user_id', type=int, location='json')
-        self.reqparse.add_argument('project_id', type=int, location='json')
-        self.reqparse.add_argument('task_id', type=int, location='json')
+        self.reqparse.add_argument('user_id', type=int)
+        self.reqparse.add_argument('project_id', type=int)
+        self.reqparse.add_argument('task_id', type=int)
         super().__init__()
 
     def get(self, id):

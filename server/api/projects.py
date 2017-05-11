@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse, fields, marshal
-from utils import auth, get_resource
+from utils import login_required, get_resource
 
 key = 'project'
 
@@ -15,15 +15,13 @@ fields = {
 
 
 class ProjectListAPI(Resource):
-    decorators = [auth.login_required]
+    decorators = [login_required]
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('name', type=str, required=True,
-                                   help='No {} name provided'.format(key),
-                                   location='json')
-        self.reqparse.add_argument('description', type=str, default='',
-                                   location='json')
+                                   help='No {} name provided'.format(key))
+        self.reqparse.add_argument('description', type=str, default='')
         super().__init__()
 
     def get(self):
@@ -40,12 +38,12 @@ class ProjectListAPI(Resource):
 
 
 class ProjectAPI(Resource):
-    decorators = [auth.login_required]
+    decorators = [login_required]
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('name', type=str, location='json')
-        self.reqparse.add_argument('description', type=str, location='json')
+        self.reqparse.add_argument('name', type=str)
+        self.reqparse.add_argument('description', type=str)
         super().__init__()
 
     def get(self, id):

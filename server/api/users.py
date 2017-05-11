@@ -1,10 +1,11 @@
 from flask_restful import Resource, reqparse, fields, marshal
-from utils import auth, get_resource
+from utils import login_required, get_resource
 
 key = 'user'
 
 data = [
-    {'id':1, 'first_name':'Ofir', 'last_name':'Herzas', 'username':'ofirh@tikalk.com', 'password':'1234', 'role_id':0, 'projects':[1]}
+    {'id':1, 'first_name':'Ofir', 'last_name':'Herzas', 'username':'ofirh@tikalk.com', 'password':'1234', 'role_id':0, 'projects':[1]},
+    {'id':2, 'first_name':'Test', 'last_name':'', 'username':'admin', 'password':'admin', 'role_id':0, 'projects':[0]},
 ]
 
 fields = {
@@ -19,15 +20,13 @@ fields = {
 
 
 class UserListAPI(Resource):
-    decorators = [auth.login_required]
+    decorators = [login_required]
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('first_name', type=str, required=True,
-                                   help='No {} first_name provided'.format(key),
-                                   location='json')
-        self.reqparse.add_argument('role_id', type=int, default=1,
-                                   location='json')
+                                   help='No {} first_name provided'.format(key))
+        self.reqparse.add_argument('role_id', type=int, default=1)
         super().__init__()
 
     def get(self):
@@ -44,16 +43,16 @@ class UserListAPI(Resource):
 
 
 class UserAPI(Resource):
-    decorators = [auth.login_required]
+    decorators = [login_required]
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('first_name', type=str, location='json')
-        self.reqparse.add_argument('last_name', type=str, location='json')
-        self.reqparse.add_argument('username', type=str, location='json')
-        self.reqparse.add_argument('password', type=str, location='json')
-        self.reqparse.add_argument('role_id', type=int, location='json')
-        self.reqparse.add_argument('projects', type=list, location='json')
+        self.reqparse.add_argument('first_name', type=str)
+        self.reqparse.add_argument('last_name', type=str)
+        self.reqparse.add_argument('username', type=str)
+        self.reqparse.add_argument('password', type=str)
+        self.reqparse.add_argument('role_id', type=int)
+        self.reqparse.add_argument('projects', type=list)
         super().__init__()
 
     def get(self, id):
@@ -74,9 +73,8 @@ class UserAPI(Resource):
         return {'result': True}
 
 
-@auth.verify_password
-def verify_password(username, password):
+def get_user(username, password):
     try:
         user = [x for x in data if x['username'] == username and x['password'] == password][0]
-        return True
-    except: return False
+        return user
+    except: return None

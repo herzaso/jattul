@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse, fields, marshal
-from utils import auth, get_resource
+from utils import login_required, get_resource
 
 key = 'role'
 
@@ -15,13 +15,12 @@ fields = {
 
 
 class RoleListAPI(Resource):
-    decorators = [auth.login_required]
+    decorators = [login_required]
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('name', type=str, required=True,
-                                   help='No {} name provided'.format(key),
-                                   location='json')
+                                   help='No {} name provided'.format(key))
         super().__init__()
 
     def get(self):
@@ -38,12 +37,12 @@ class RoleListAPI(Resource):
 
 
 class RoleAPI(Resource):
-    decorators = [auth.login_required]
+    decorators = [login_required]
 
     def __init__(self):
         self.key = 'role'
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('name', type=str, location='json')
+        self.reqparse.add_argument('name', type=str)
         super().__init__()
 
     def get(self, id):

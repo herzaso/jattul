@@ -1,11 +1,13 @@
-from flask import abort
-from flask_httpauth import HTTPBasicAuth
+from flask import abort, make_response, jsonify, session
+from functools import wraps
 
-auth = HTTPBasicAuth()
-
-# @auth.error_handler
-# def unauthorized():
-#     return make_response(jsonify({'message': 'Unauthorized access'}), 403)
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session or not session['user']:
+            return make_response(jsonify({'error': 'Unauthorized access'}), 403)
+        return f(*args, **kwargs)
+    return decorated_function
 
 def get_resource(l, id):
     res = [x for x in l if x['id'] == id]

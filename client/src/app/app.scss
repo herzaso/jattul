@@ -1,0 +1,14 @@
+html, body, #app {
+  height: 100%;
+  font-size: 1em;
+}
+
+section {
+  height: 100%;
+  width: 100%;
+  transition: background 2s ease-in-out;
+}
+
+#app {
+  overflow-y: hidden;
+}

@@ -1,0 +1,42 @@
+.centered {
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.logo.container {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.blueBackground {
+  background-color: #2694d1;
+  color: white;
+}
+
+section a, sectiona:hover {
+  color: white;
+}
+
+section a:hover {
+  text-decoration: underline;
+}
+
+.shadow {
+  box-shadow: 1px 1px 0 0 rgba(0,0,0,0.2);
+}
+
+.input-lg, .btn {
+  padding: 12px;
+  font-size: 1.5em;
+}
+
+.input-lg::placeholder {
+  color: rgba(0,0,0,0.3);
+  font-size: 0.8em
+}
+
+.form-control-feedback {
+  color: rgba(10,50,150,.3);
+  margin-top: 0 !important;
+}

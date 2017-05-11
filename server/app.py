@@ -1,6 +1,6 @@
 from flask import Flask, make_response, jsonify
 from flask_restful import Api
-from api.login import login
+from api.login import LoginAPI, LogoutAPI
 from api.roles import RoleAPI, RoleListAPI
 from api.projects import ProjectAPI, ProjectListAPI
 from api.users import UserAPI, UserListAPI, data as users
@@ -15,7 +15,8 @@ app.config.update(
     SECRET_KEY = 'T!kAl rulzz'
 )
 
-app.register_blueprint(login)
+api.add_resource(LoginAPI, '/jattul/api/v1.0/login', endpoint='login')
+api.add_resource(LogoutAPI, '/jattul/api/v1.0/logout', endpoint='logout')
 api.add_resource(RoleListAPI, '/jattul/api/v1.0/roles', endpoint='roles')
 api.add_resource(RoleAPI, '/jattul/api/v1.0/roles/<int:id>', endpoint='role')
 api.add_resource(UserListAPI, '/jattul/api/v1.0/users', endpoint='users')
@@ -30,10 +31,6 @@ api.add_resource(TrackingAPI, '/jattul/api/v1.0/trackings/<int:id>', endpoint='t
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not Found'}), 404)
-
-# @app.route('/jattul/api/v1.0/login', methods=['GET'])
-# def login():
-#     return '', 401
 
 if __name__ == '__main__':
     app.run()
