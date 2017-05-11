@@ -8,10 +8,10 @@ through RESTful APIs like the following:
 HTTP Method |	URI                                               | Action
 ----------- | ------------------------------------------------- | -----------------------
 GET         |	http://[hostname]/jattul/api/v1.0/users           | Retrieve list of users
-GET	        | http://[hostname]/jattul/api/v1.0/users/[task_id]	| Retrieve a user
+GET	        | http://[hostname]/jattul/api/v1.0/users/[user_id]	| Retrieve a user
 POST        | http://[hostname]/jattul/api/v1.0/users           | Create a new user
-PUT         | http://[hostname]/jattul/api/v1.0/users/[task_id] | Update an existing user
-DELETE      | http://[hostname]/jattul/api/v1.0/users/[task_id] | Delete a user
+PUT         | http://[hostname]/jattul/api/v1.0/users/[user_id] | Update an existing user
+DELETE      | http://[hostname]/jattul/api/v1.0/users/[user_id] | Delete a user
 
 Also, login (username, password) and logout operations are supported
 
