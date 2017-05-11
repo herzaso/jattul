@@ -30,7 +30,7 @@ babelLoader.query = {presets: ['react-hmre']};
 
 config.eslint = {
   configFile: './.eslintrc',
-  failOnError: true,
+  failOnError: false,
   cache: true
 };
 
